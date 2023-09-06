@@ -20,6 +20,10 @@ concurrency:
   group: 'pages'
   cancel-in-progress: true
 
+env:
+  VITE_URL_PATH_TRAMOSANDCLIENTES: ${{secrets.VITE_URL_PATH_TRAMOSANDCLIENTES}}
+  VITE_URL_PATH_TOP: ${{secrets.VITE_URL_PATH_TOP}}
+
 jobs:
   # Single deploy job since we're just deploying
   deploy:
