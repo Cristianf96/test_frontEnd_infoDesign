@@ -12,17 +12,17 @@ const AppBarComponent = (props) => {
         {
             id: useId(),
             title: 'Tramos',
-            navigate: '/tramos'
+            navigate: 'test_frontEnd_infoDesign/tramos'
         },
         {
             id: useId(),
             title: 'Clientes',
-            navigate: '/clientes'
+            navigate: 'test_frontEnd_infoDesign/clientes'
         },
         {
             id: useId(),
             title: 'Top',
-            navigate: '/top'
+            navigate: 'test_frontEnd_infoDesign/top'
         }
     ];
     const { window } = props;
@@ -43,7 +43,7 @@ const AppBarComponent = (props) => {
             <Typography
                 variant="h6"
                 sx={{ my: 2 }}
-                onClick={() => handleNavigate('/')}
+                onClick={() => handleNavigate('/test_frontEnd_infoDesign')}
             >
                 InfoDesign
             </Typography>
@@ -78,7 +78,7 @@ const AppBarComponent = (props) => {
                         variant="h6"
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                        onClick={() => handleNavigate('/')}
+                        onClick={() => handleNavigate('/test_frontEnd_infoDesign')}
                     >
                         InfoDesign
                     </Typography>

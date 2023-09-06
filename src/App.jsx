@@ -11,11 +11,11 @@ function App() {
         <BrowserRouter>
           <AppBarComponent />
           <Routes>
-            <Route path="/" element={home} />
-            <Route path="/tramos" element={tramos} />
-            <Route path="/clientes" element={clientes} />
-            <Route path="/top" element={top} />
-            <Route path="/*" element={error404} />
+            <Route path="/test_frontEnd_infoDesign" element={home} />
+            <Route path="test_frontEnd_infoDesign/tramos" element={tramos} />
+            <Route path="test_frontEnd_infoDesign/clientes" element={clientes} />
+            <Route path="test_frontEnd_infoDesign/top" element={top} />
+            <Route path="test_frontEnd_infoDesign/*" element={error404} />
           </Routes>
         </BrowserRouter >
       </div >
