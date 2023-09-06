@@ -12,7 +12,6 @@ import Industrial from './components/Industrial';
 const ClentesList = (props) => {
 
     const { data } = props
-    console.log({ data })
     const [value, setValue] = useState('0');
 
     const handleChange = (event, newValue) => {
