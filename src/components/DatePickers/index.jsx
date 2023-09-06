@@ -5,7 +5,7 @@ import { Box, Typography, Button } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { queryTramos } from '../../utils/querys';
+import { queryTramos, queryClientes } from '../../utils/querys';
 
 const DatePickers = (props) => {
 
@@ -26,8 +26,18 @@ const DatePickers = (props) => {
             switch (view) {
                 case 'tramos': {
                     const newData = queryTramos(dateInicial, dateFinal)
+                    
+                    if (newData['Tramo 1'] && newData['Tramo 2'] && newData['Tramo 3'] && newData['Tramo 4'] && newData['Tramo 5']) {
+                        setData(newData)
+                    } else {
+                        setData(null)
+                    }
+                    break;
+                }
+                case 'clientes': {
+                    const newData = queryClientes(dateInicial, dateFinal)
 
-                    if (newData.CONSUMO_POR_TRAMO && newData.COSTOS_POR_TRAMO && newData.PERDIDAS_POR_TRAMO) {
+                    if (newData.Residencial && newData.Industrial && newData.Comercial) {
                         setData(newData)
                     } else {
                         setData(null)
