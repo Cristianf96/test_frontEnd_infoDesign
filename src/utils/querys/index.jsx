@@ -1,25 +1,23 @@
-import dataFakeJson from "../Files/dataFakeJson.json"
-import moment from "moment";
+import axios from 'axios';
 
-const filtrarPorFecha = (item, fechaInicial, fechaFinal) => {
-    const fechaItem = moment(item.Fecha).format("YYYY-MM-DD");
-    const fechaInicio = moment(fechaInicial).format("YYYY-MM-DD");
-    const fechaFin = moment(fechaFinal).format("YYYY-MM-DD");
-    return fechaItem >= fechaInicio && fechaItem <= fechaFin;
-}
+export const queryTramos = async (dateInicial, dateFinal) => {
 
-export const queryTramos = (dateInicial, dateFinal) => {
-    const datosFiltradosConsumo = dataFakeJson.CONSUMO_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
-    const datosFiltradosCostos = dataFakeJson.COSTOS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
-    const datosFiltradosPerdidas = dataFakeJson.PERDIDAS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
+    const response = await axios.get(`${import.meta.env.VITE_URL_PATH_TRAMOSANDCLIENTES}?dateInicial=${dateInicial}&dateFinal=${dateFinal}`)
+        .then(response => {
+            const data = response.data;
+            return data
+        })
+        .catch(error => {
+            console.error('There was a problem with the request:', error);
+        });
 
     const historiasPorTramo = {};
 
-    datosFiltradosConsumo.forEach((consumo, index) => {
+    response.datosFiltradosConsumo.forEach((consumo, index) => {
         const tramo = consumo.Linea;
 
-        const costos = datosFiltradosCostos.find((costo, indexC) => indexC === index);
-        const perdidas = datosFiltradosPerdidas.find((perdida, indexP) => indexP === index);
+        const costos = response.datosFiltradosCostos.find((costo, indexC) => indexC === index);
+        const perdidas = response.datosFiltradosPerdidas.find((perdida, indexP) => indexP === index);
 
         const historia = {
             Linea: tramo,
@@ -44,10 +42,16 @@ export const queryTramos = (dateInicial, dateFinal) => {
     return historiasPorTramo;
 }
 
-export const queryClientes = (dateInicial, dateFinal) => {
-    const datosFiltradosConsumo = dataFakeJson.CONSUMO_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
-    const datosFiltradosCostos = dataFakeJson.COSTOS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
-    const datosFiltradosPerdidas = dataFakeJson.PERDIDAS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
+export const queryClientes = async (dateInicial, dateFinal) => {
+
+    const response = await axios.get(`${import.meta.env.VITE_URL_PATH_TRAMOSANDCLIENTES}?dateInicial=${dateInicial}&dateFinal=${dateFinal}`)
+        .then(response => {
+            const data = response.data;
+            return data
+        })
+        .catch(error => {
+            console.error('There was a problem with the request:', error);
+        });
 
     const agrupados = {
         Residencial: [],
@@ -60,10 +64,10 @@ export const queryClientes = (dateInicial, dateFinal) => {
     for (let index = 0; index < clientes.length; index++) {
         const elementCliente = clientes[index];
 
-        datosFiltradosConsumo.forEach((item, index) => {
+        response.datosFiltradosConsumo.forEach((item, index) => {
             const tipoCliente = elementCliente;
-            const costo = datosFiltradosCostos.find((c, indexC) => indexC === index);
-            const perdida = datosFiltradosPerdidas.find((p, indexP) => indexP === index);
+            const costo = response.datosFiltradosCostos.find((c, indexC) => indexC === index);
+            const perdida = response.datosFiltradosPerdidas.find((p, indexP) => indexP === index);
 
             if (costo && perdida) {
                 const consumo = item[`${elementCliente} [Wh]`] ? item[`${elementCliente} [Wh]`] : item[`${elementCliente}  [Wh]`];
@@ -87,12 +91,20 @@ export const queryClientes = (dateInicial, dateFinal) => {
     return agrupados;
 }
 
-export const queryTop = (dateInicial, dateFinal) => {
-    const datosFiltradosPerdidas = dataFakeJson.PERDIDAS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
+export const queryTop = async (dateInicial, dateFinal) => {
+
+    const response = await axios.get(`${import.meta.env.VITE_URL_PATH_TOP}?dateInicial=${dateInicial}&dateFinal=${dateFinal}`)
+        .then(response => {
+            const data = response.data;
+            return data
+        })
+        .catch(error => {
+            console.error('There was a problem with the request:', error);
+        });
 
     const perdidasTotalesPorTramo = {};
 
-    datosFiltradosPerdidas.forEach((perdida) => {
+    response.datosFiltradosPerdidas.forEach((perdida) => {
         const tramo = perdida.Linea;
         const perdidaTotal = perdida["Residencial [%]"] + perdida["Comercial [%]"] + perdida["Industrial [%]"];
 

@@ -20,12 +20,12 @@ const DatePickers = (props) => {
         setError
     } = props
 
-    const searchDataAndFilter = () => {
+    const searchDataAndFilter = async () => {
         if (dateInicial !== null && dateFinal !== null && dateInicial <= dateFinal) {
             setError(false)
             switch (view) {
                 case 'tramos': {
-                    const newData = queryTramos(dateInicial, dateFinal)
+                    const newData = await queryTramos(dateInicial, dateFinal)
 
                     if (newData['Tramo 1'] && newData['Tramo 2'] && newData['Tramo 3'] && newData['Tramo 4'] && newData['Tramo 5']) {
                         setData(newData)
@@ -35,7 +35,7 @@ const DatePickers = (props) => {
                     break;
                 }
                 case 'clientes': {
-                    const newData = queryClientes(dateInicial, dateFinal)
+                    const newData = await queryClientes(dateInicial, dateFinal)
 
                     if (newData.Residencial && newData.Industrial && newData.Comercial) {
                         setData(newData)
@@ -45,7 +45,7 @@ const DatePickers = (props) => {
                     break;
                 }
                 case 'top': {
-                    const newData = queryTop(dateInicial, dateFinal)
+                    const newData = await queryTop(dateInicial, dateFinal)
 
                     if (newData.length > 0) {
                         setData(newData)
