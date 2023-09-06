@@ -9,7 +9,7 @@ import Residencial from './components/Residencial';
 import Comercial from './components/Comercial';
 import Industrial from './components/Industrial';
 
-const Clentesist = (props) => {
+const ClentesList = (props) => {
 
     const { data } = props
     console.log({ data })
@@ -43,8 +43,8 @@ const Clentesist = (props) => {
     )
 }
 
-Clentesist.propTypes = {
+ClentesList.propTypes = {
     data: PropTypes.any,
 };
 
-export default Clentesist
+export default ClentesList

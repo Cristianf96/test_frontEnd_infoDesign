@@ -88,7 +88,24 @@ export const queryClientes = (dateInicial, dateFinal) => {
 }
 
 export const queryTop = (dateInicial, dateFinal) => {
-    console.log('queryTop :>> ', { dateInicial, dateFinal, dataFakeJson });
+    const datosFiltradosPerdidas = dataFakeJson.PERDIDAS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
 
-    return []
-}
+    const perdidasTotalesPorTramo = {};
+
+    datosFiltradosPerdidas.forEach((perdida) => {
+        const tramo = perdida.Linea;
+        const perdidaTotal = perdida["Residencial [%]"] + perdida["Comercial [%]"] + perdida["Industrial [%]"];
+
+        if (!perdidasTotalesPorTramo[tramo]) {
+            perdidasTotalesPorTramo[tramo] = perdidaTotal;
+        } else {
+            perdidasTotalesPorTramo[tramo] += perdidaTotal;
+        }
+    });
+
+    const tramosOrdenadosPorPerdidas = Object.entries(perdidasTotalesPorTramo)
+        .sort(([, perdidasA], [, perdidasB]) => perdidasB - perdidasA)
+        .map(([tramo, value]) => ({ Linea: tramo, ['Total [%]']: value }));
+
+    return tramosOrdenadosPorPerdidas;
+};
