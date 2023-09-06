@@ -82,7 +82,11 @@ const DatePickers = (props) => {
                             </Typography>
                         </Box>
                         <Box>
-                            <DatePicker value={dateInicial && moment(dateInicial)} onChange={(newValue) => changeFormatDate('inicial', newValue)} maxDate={moment()} />
+                            <DatePicker
+                                value={dateInicial && moment(dateInicial)}
+                                onChange={(newValue) => { changeFormatDate('inicial', newValue); setData(null) }}
+                                maxDate={moment()}
+                            />
                         </Box>
                     </Box>
                     <Box>
@@ -92,7 +96,11 @@ const DatePickers = (props) => {
                             </Typography>
                         </Box>
                         <Box>
-                            <DatePicker value={dateFinal && moment(dateFinal)} onChange={(newValue) => changeFormatDate('final', newValue)} maxDate={moment()} />
+                            <DatePicker
+                                value={dateFinal && moment(dateFinal)}
+                                onChange={(newValue) => { changeFormatDate('final', newValue); setData(null) }}
+                                maxDate={moment()}
+                            />
                         </Box>
                     </Box>
                 </LocalizationProvider>
