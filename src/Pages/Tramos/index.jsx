@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material'
 import DatePickers from '../../components/DatePickers'
 import { Player } from '@lottiefiles/react-lottie-player';
 import emptyList from '../../utils/Files/emptyList.json'
+import TramosList from '../../components/Lists/Tramos'
 
 const Tramos = () => {
 
@@ -53,21 +54,21 @@ const Tramos = () => {
           </Typography>
         </>
       )}
-      {dateInicial !== null && dateFinal !== null && data !== null && Object.keys(data).length > 0 ? (
+      {data !== null && Object.keys(data).length > 0 ? (
         <>
-          Tramos con la tabla
-          {dateInicial}
-          {dateFinal}
+          <TramosList
+            data={data}
+          />
         </>
       ) : (
-        <>
+        <Box marginTop={3}>
           <Player
             autoplay
             loop
             src={emptyList}
             style={{ height: '300px', width: '300px' }}
           />
-        </>
+        </Box>
       )}
     </Box>
   )
