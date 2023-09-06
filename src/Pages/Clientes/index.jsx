@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material'
 import DatePickers from '../../components/DatePickers'
 import { Player } from '@lottiefiles/react-lottie-player';
 import emptyList from '../../utils/Files/emptyList.json'
-import Clentesist from '../../components/Lists/Clientes';
+import ClentesList from '../../components/Lists/Clientes';
 
 const Clientes = () => {
 
@@ -14,6 +14,16 @@ const Clientes = () => {
 
   return (
     <Box>
+      <Box textAlign={'center'} marginBottom={1}>
+        <Typography
+          variant="h3"
+          component="div"
+          color={'primary'}
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+        >
+          CLIENTES
+        </Typography>
+      </Box>
       <DatePickers
         view='clientes'
         dateInicial={dateInicial}
@@ -50,7 +60,7 @@ const Clientes = () => {
       )}
       {data !== null && Object.keys(data).length > 0 ? (
         <>
-          <Clentesist data={data} />
+          <ClentesList data={data} />
         </>
       ) : (
         <Box marginTop={3}>

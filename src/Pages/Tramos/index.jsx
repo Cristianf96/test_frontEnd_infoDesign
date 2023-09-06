@@ -14,6 +14,16 @@ const Tramos = () => {
 
   return (
     <Box>
+      <Box textAlign={'center'} marginBottom={1}>
+        <Typography
+          variant="h3"
+          component="div"
+          color={'primary'}
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+        >
+          TRAMOS
+        </Typography>
+      </Box>
       <DatePickers
         view='tramos'
         dateInicial={dateInicial}

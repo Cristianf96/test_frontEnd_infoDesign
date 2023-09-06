@@ -12,6 +12,10 @@ export const tabsListClientes = {
     comercial: { title: 'COMERCIAL' },
 }
 
+export const tabsListTop = {
+    top: { title: 'TOP' },
+}
+
 export const columnsTramos = [
     {
         width: 10,
@@ -84,78 +88,6 @@ export const columnsTramos = [
     },
 ];
 
-export const columnsCostos = [
-    {
-        width: 10,
-        label: 'No.',
-        dataKey: 'no.',
-    },
-    {
-        width: 200,
-        label: 'Linea',
-        dataKey: 'linea',
-    },
-    {
-        width: 120,
-        label: 'Fecha',
-        dataKey: 'fecha',
-    },
-    {
-        width: 200,
-        label: 'Residencial [Costo/Wh]',
-        dataKey: 'residencial',
-        numeric: true,
-    },
-    {
-        width: 200,
-        label: 'Comercial [Costo/Wh]',
-        dataKey: 'comercial',
-        numeric: true,
-    },
-    {
-        width: 200,
-        label: 'Industrial [Costo/Wh]',
-        dataKey: 'industrial',
-        numeric: true,
-    },
-];
-
-export const columnsPerdidas = [
-    {
-        width: 10,
-        label: 'No.',
-        dataKey: 'no.',
-    },
-    {
-        width: 200,
-        label: 'Linea',
-        dataKey: 'linea',
-    },
-    {
-        width: 120,
-        label: 'Fecha',
-        dataKey: 'fecha',
-    },
-    {
-        width: 200,
-        label: 'Residencial [%]',
-        dataKey: 'residencial',
-        numeric: true,
-    },
-    {
-        width: 200,
-        label: 'Comercial [%]',
-        dataKey: 'comercial',
-        numeric: true,
-    },
-    {
-        width: 200,
-        label: 'Industrial [%]',
-        dataKey: 'industrial',
-        numeric: true,
-    },
-];
-
 export const columnsClientes = [
     {
         width: 10,
@@ -188,6 +120,25 @@ export const columnsClientes = [
         width: 200,
         label: 'Costo',
         dataKey: 'Costo',
+        numeric: true,
+    },
+];
+
+export const columnsTops = [
+    {
+        width: 10,
+        label: 'No.',
+        dataKey: 'no.',
+    },
+    {
+        width: 200,
+        label: 'Linea',
+        dataKey: 'linea',
+    },
+    {
+        width: 200,
+        label: 'Total [%]',
+        dataKey: 'Total [%]',
         numeric: true,
     },
 ];
