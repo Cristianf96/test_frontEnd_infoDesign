@@ -15,7 +15,7 @@ function App() {
             <Route path="test_frontEnd_infoDesign/tramos" element={tramos} />
             <Route path="test_frontEnd_infoDesign/clientes" element={clientes} />
             <Route path="test_frontEnd_infoDesign/top" element={top} />
-            <Route path="test_frontEnd_infoDesign/*" element={error404} />
+            <Route path="/*" element={error404} />
           </Routes>
         </BrowserRouter >
       </div >
