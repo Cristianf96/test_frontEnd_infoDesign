@@ -42,7 +42,7 @@ const Top = (props) => {
                                 row['No.'] = index + 1
                                 const value = row[column.label];
                                 return (
-                                    <TableCell key={new Date()}>
+                                    <TableCell key={new Date() + index }>
                                         {value}
                                     </TableCell>
                                 );

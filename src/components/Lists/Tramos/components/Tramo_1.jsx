@@ -42,7 +42,7 @@ const Tramos_1 = (props) => {
                                 row['No.'] = index + 1
                                 const value = row[column.dataKey];
                                 return (
-                                    <TableCell key={new Date()}>
+                                    <TableCell key={new Date() + index}>
                                         {value}
                                     </TableCell>
                                 );
