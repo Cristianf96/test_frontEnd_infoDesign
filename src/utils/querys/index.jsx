@@ -13,17 +13,78 @@ export const queryTramos = (dateInicial, dateFinal) => {
     const datosFiltradosCostos = dataFakeJson.COSTOS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
     const datosFiltradosPerdidas = dataFakeJson.PERDIDAS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
 
-    return {
-        CONSUMO_POR_TRAMO: datosFiltradosConsumo.length > 0 ? datosFiltradosConsumo : null,
-        COSTOS_POR_TRAMO: datosFiltradosCostos.length > 0 ? datosFiltradosCostos : null,
-        PERDIDAS_POR_TRAMO: datosFiltradosPerdidas.length > 0 ? datosFiltradosPerdidas : null
-    }
+    const historiasPorTramo = {};
+
+    datosFiltradosConsumo.forEach((consumo, index) => {
+        const tramo = consumo.Linea;
+
+        const costos = datosFiltradosCostos.find((costo, indexC) => indexC === index);
+        const perdidas = datosFiltradosPerdidas.find((perdida, indexP) => indexP === index);
+
+        const historia = {
+            Linea: tramo,
+            Fecha: consumo.Fecha,
+            Consumo_residencial: consumo[`Residencial [Wh]`] ? consumo[`Residencial [Wh]`] : consumo[`Residencial  [Wh]`],
+            Consumo_comercial: consumo[`Comercial [Wh]`] ? consumo[`Comercial [Wh]`] : consumo[`Comercial  [Wh]`],
+            Consumo_industrial: consumo[`Industrial [Wh]`] ? consumo[`Industrial [Wh]`] : consumo[`Industrial  [Wh]`],
+            Perdidas_residencial: perdidas[`Residencial [%]`],
+            Perdidas_comercial: perdidas[`Comercial [%]`],
+            Perdidas_industrial: perdidas[`Industrial [%]`],
+            Costo_residencial: costos[`Residencial [Costo/Wh]`] * consumo[`Residencial [Wh]`] ? consumo[`Residencial [Wh]`] : consumo[`Residencial  [Wh]`],
+            Costo_comercial: costos[`Comercial [Costo/Wh]`] * consumo[`Comercial [Wh]`] ? consumo[`Comercial [Wh]`] : consumo[`Comercial  [Wh]`],
+            Costo_industrial: costos[`Industrial [Costo/Wh]`] * consumo[`Industrial [Wh]`] ? consumo[`Industrial [Wh]`] : consumo[`Industrial  [Wh]`],
+        };
+
+        if (!historiasPorTramo[tramo]) {
+            historiasPorTramo[tramo] = [];
+        }
+        historiasPorTramo[tramo].push(historia);
+    });
+
+    return historiasPorTramo;
 }
 
 export const queryClientes = (dateInicial, dateFinal) => {
-    console.log('queryClientes :>> ', { dateInicial, dateFinal, dataFakeJson });
+    const datosFiltradosConsumo = dataFakeJson.CONSUMO_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
+    const datosFiltradosCostos = dataFakeJson.COSTOS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
+    const datosFiltradosPerdidas = dataFakeJson.PERDIDAS_POR_TRAMO.filter(item => filtrarPorFecha(item, dateInicial, dateFinal));
 
-    return []
+    const agrupados = {
+        Residencial: [],
+        Comercial: [],
+        Industrial: [],
+    };
+
+    const clientes = ['Residencial', 'Comercial', 'Industrial']
+
+    for (let index = 0; index < clientes.length; index++) {
+        const elementCliente = clientes[index];
+
+        datosFiltradosConsumo.forEach((item, index) => {
+            const tipoCliente = elementCliente;
+            const costo = datosFiltradosCostos.find((c, indexC) => indexC === index);
+            const perdida = datosFiltradosPerdidas.find((p, indexP) => indexP === index);
+
+            if (costo && perdida) {
+                const consumo = item[`${elementCliente} [Wh]`] ? item[`${elementCliente} [Wh]`] : item[`${elementCliente}  [Wh]`];
+                const perdidaPorcentaje = perdida[`${elementCliente} [%]`];
+                const costoPorWh = costo[`${elementCliente} [Costo/Wh]`];
+                const costoTotal = consumo * costoPorWh;
+
+                const resultado = {
+                    Linea: item.Linea,
+                    Fecha: item.Fecha,
+                    Consumo: consumo,
+                    Pérdidas: perdidaPorcentaje,
+                    Costo: costoTotal,
+                };
+
+                agrupados[tipoCliente].push(resultado);
+            }
+        });
+    }
+
+    return agrupados;
 }
 
 export const queryTop = (dateInicial, dateFinal) => {

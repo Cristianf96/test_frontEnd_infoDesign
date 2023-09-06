@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { columnsPerdidas } from "../../../../utils/constants"
+import { columnsTramos } from "../../../../utils/constants"
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,14 +9,14 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/material';
 
-const Perdidas = (props) => {
+const Tramos_1 = (props) => {
 
     const { data } = props
 
     const HeaderContentTable = () => {
         return (
             <TableRow>
-                {columnsPerdidas.map((column) => (
+                {columnsTramos.map((column) => (
                     <TableCell
                         key={column.dataKey}
                         variant="head"
@@ -38,9 +38,9 @@ const Perdidas = (props) => {
                 {data.map((row, index) => {
                     return (
                         <TableRow hover role="checkbox" tabIndex={-1} key={row.linea}>
-                            {columnsPerdidas.map((column) => {
+                            {columnsTramos.map((column) => {
                                 row['No.'] = index + 1
-                                const value = row[column.label];
+                                const value = row[column.dataKey];
                                 return (
                                     <TableCell key={new Date()}>
                                         {value}
@@ -72,8 +72,8 @@ const Perdidas = (props) => {
     )
 }
 
-Perdidas.propTypes = {
+Tramos_1.propTypes = {
     data: PropTypes.array,
 };
 
-export default Perdidas
+export default Tramos_1

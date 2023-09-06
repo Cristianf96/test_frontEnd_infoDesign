@@ -12,12 +12,6 @@ const Tramos = () => {
   const [data, setData] = useState({})
   const [error, setError] = useState(false)
 
-  console.log('Tramos', {
-    dateInicial,
-    dateFinal,
-    data
-  })
-
   return (
     <Box>
       <DatePickers
