@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material'
 import DatePickers from '../../components/DatePickers'
 import { Player } from '@lottiefiles/react-lottie-player';
 import emptyList from '../../utils/Files/emptyList.json'
+import loadingData from "../../utils/Files/loadingData.json"
 import TramosList from '../../components/Lists/Tramos'
 
 const Tramos = () => {
@@ -11,6 +12,7 @@ const Tramos = () => {
   const [dateFinal, setDateFinal] = useState(null)
   const [data, setData] = useState({})
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   return (
     <Box>
@@ -33,6 +35,7 @@ const Tramos = () => {
         data={data}
         setData={setData}
         setError={setError}
+        setLoading={setLoading}
       />
       {error && (
         <>
@@ -46,7 +49,7 @@ const Tramos = () => {
           </Typography>
         </>
       )}
-      {data === null && (
+      {!loading && data === null && (
         <>
           <Typography
             variant="h7"
@@ -58,23 +61,38 @@ const Tramos = () => {
           </Typography>
         </>
       )}
-      {data !== null && Object.keys(data).length > 0 ? (
+      {loading ? (
         <>
-          <TramosList
-            data={data}
-          />
-        </>
-      ) : (
-        <Box marginTop={3}>
           <Player
             autoplay
             loop
-            src={emptyList}
-            style={{ height: '300px', width: '300px' }}
+            src={loadingData}
+            style={{ height: '400px', width: '400px' }}
           />
-        </Box>
-      )}
-    </Box>
+        </>
+      ) : (
+        <>
+          {data !== null && Object.keys(data).length > 0 ? (
+            <>
+              <TramosList
+                data={data}
+              />
+            </>
+          ) : (
+            <Box marginTop={3}>
+              <Player
+                autoplay
+                loop
+                src={emptyList}
+                style={{ height: '300px', width: '300px' }}
+              />
+            </Box>
+          )}
+
+        </>
+      )
+      }
+    </Box >
   )
 }
 

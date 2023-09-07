@@ -17,7 +17,8 @@ const DatePickers = (props) => {
         setDateFinal,
         // data,
         setData,
-        setError
+        setError,
+        setLoading
     } = props
 
     const searchDataAndFilter = async () => {
@@ -25,6 +26,7 @@ const DatePickers = (props) => {
             setError(false)
             switch (view) {
                 case 'tramos': {
+                    setLoading(true)
                     const newData = await queryTramos(dateInicial, dateFinal)
 
                     if (newData['Tramo 1'] && newData['Tramo 2'] && newData['Tramo 3'] && newData['Tramo 4'] && newData['Tramo 5']) {
@@ -32,9 +34,11 @@ const DatePickers = (props) => {
                     } else {
                         setData(null)
                     }
+                    setLoading(false)
                     break;
                 }
                 case 'clientes': {
+                    setLoading(true)
                     const newData = await queryClientes(dateInicial, dateFinal)
 
                     if (newData.Residencial && newData.Industrial && newData.Comercial) {
@@ -42,9 +46,11 @@ const DatePickers = (props) => {
                     } else {
                         setData(null)
                     }
+                    setLoading(false)
                     break;
                 }
                 case 'top': {
+                    setLoading(true)
                     const newData = await queryTop(dateInicial, dateFinal)
 
                     if (newData.length > 0) {
@@ -52,6 +58,7 @@ const DatePickers = (props) => {
                     } else {
                         setData(null)
                     }
+                    setLoading(false)
                     break;
                 }
                 default:
@@ -159,7 +166,8 @@ DatePickers.propTypes = {
     setDateFinal: PropTypes.func,
     data: PropTypes.any,
     setData: PropTypes.func,
-    setError: PropTypes.func
+    setError: PropTypes.func,
+    setLoading: PropTypes.func
 };
 
 export default DatePickers
